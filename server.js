@@ -212,6 +212,9 @@ app.post('/photo', upload.single('picture'), function(req, res){
         // 이미지 경로를 세션에 저장
         req.session.imagepath = imagepath;
     }
+
+    // 이미지 업로드 완료 후 클라이언트로 응답
+    res.sendStatus(200);
 });
 
 app.post("/savepost", upload.single("picture"), function (req, res) {
