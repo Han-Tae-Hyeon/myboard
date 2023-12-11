@@ -1,0 +1,73 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <link rel="stylesheet" href="/list.css">
+</head>
+
+<body>
+
+    <%- include ('menu.html') %>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">게시글 목록</h1>
+    
+        <% const allUserIds = [user.userid, ...(friendsData && friendsData.friends ? friendsData.friends : [])]; %>
+    
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <% for (let i = 0; i < data.length; i++) { %>
+                <% if (allUserIds.includes(data[i].writer)) { %>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="/content/<%= data[i]._id %>"><%= data[i].title %></a></h5>
+                                <p class="card-text"><strong>작성자:</strong> <%= data[i].writer %></p>
+                                <p class="card-text"><strong>내용:</strong> <%= data[i].content %></p>
+                                <% let post_date = new Date(data[i].date) %>
+                                <p class="card-text"><strong>작성일:</strong> <%= post_date.toLocaleDateString('kr') %></p>
+                                <button class="delete btn btn-outline-danger" data-id='<%= data[i]._id %>'>삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+        
+        <div class="container my-3">
+            <button class="btn btn-primary enter" style="float: right;" onclick="move_enter()">글쓰기</button>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    
+    <script>
+        function move_enter() {
+            window.open('/entermongo', '_self');
+        }
+    
+        $('.delete').click(function (e) {
+            let sid = e.target.dataset.id;
+            let item = $(this);
+            $.ajax({
+                type: 'delete',
+                url: '/delete/' + sid,
+            }).done(function (result) {
+                if (result.permissionDenied) {
+                    console.log("삭제 권한이 없습니다."); // 삭제 권한이 없을 때 경고창 표시
+                } else {
+                    item.closest('div.card').remove(); // 가장 가까운 div.card를 찾아서 삭제
+                }
+            }).fail(function (xhr, textStatus, errorThrown) {
+                console.log("게시물 삭제 실패");
+                console.log(xhr, textStatus, errorThrown);
+            })
+        });
+    </script>
+</body>
+</html>

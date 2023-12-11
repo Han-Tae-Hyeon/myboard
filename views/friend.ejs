@@ -1,0 +1,33 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>몽고 수정 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <link rel="stylesheet" href="/friend.css">
+</head>
+
+<body>
+
+    <%- include ('menu.html') %>
+    <!-- 검색창 및 친구 목록 -->
+    <div class="container">
+        <!-- 검색창 -->
+        <form action="/add-friend" method="post">
+            <input type="text" name="friendId" placeholder="친구 아이디 검색">
+            <button type="submit">친구 추가</button>
+        </form>
+
+        <!-- 친구 목록 -->
+        <ul>
+            <% for (let friend of friendsData) { %>
+                <li>
+                    <%= friend.userid %>
+                </li>
+                <% } %>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+.navbar {
+    background-color: #000000;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar-toggler-icon {
+    background-color: #ffffff;
+}
+
+/* 활성 메뉴의 글씨색을 변경하려면 아래의 코드를 추가하세요. */
+.navbar-nav .nav-item.active .nav-link {
+    color: #ffffff !important;
+}
+
+/* 검색창 스타일을 변경하려면 아래의 코드를 추가하세요. */
+.navbar form input,
+.navbar form button {
+    color: #ffffff;
+}
+
+/* 검색창 배경색을 변경하려면 아래의 코드를 추가하세요. */
+.navbar form input {
+    background-color: #495057; /* 예시로 다른 어두운 색으로 설정함 */
+}
+
+/* 검색창 버튼 배경색을 변경하려면 아래의 코드를 추가하세요. */
+.navbar form button {
+    background-color: #6c757d; /* 예시로 다른 어두운 색으로 설정함 */
+}
